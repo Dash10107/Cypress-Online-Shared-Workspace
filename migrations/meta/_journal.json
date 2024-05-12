@@ -1,0 +1,27 @@
+{
+  "version": "6",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1715524117674,
+      "tag": "0000_foamy_black_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1715525083072,
+      "tag": "0001_broad_hercules",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1715527037229,
+      "tag": "0002_fixed_stature",
+      "breakpoints": true
+    }
+  ]
+}
