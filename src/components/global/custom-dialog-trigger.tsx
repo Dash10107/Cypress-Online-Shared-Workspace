@@ -32,9 +32,22 @@ const CustomDialogTrigger: React.FC<CustomDialogTriggerProps> = ({
         block
         sm:h-[440px]
         overflow-scroll
-        w-full
+        sm:w-[50vw]
+        no-scrollbar
       "
       >
+         <style jsx>{`
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+      `}</style>
         <DialogHeader>
           <DialogTitle>{header}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

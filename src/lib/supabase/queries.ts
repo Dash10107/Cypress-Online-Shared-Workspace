@@ -150,14 +150,14 @@ export const getSharedWorkspaces = async (userId: string) => {
 };
 
 export const addCollaborators = async (users: User[], workspaceId: string) => {
-  const response = users.forEach(async (user: User) => {
-    const userExists = await db.query.collaborators.findFirst({
-      where: (u, { eq }) =>
-        and(eq(u.user_id, user.id), eq(u.workspace_id, workspaceId)),
+    const response = users.forEach(async (user: User) => {
+      const userExists = await db.query.collaborators.findFirst({
+        where: (u, { eq }) =>
+          and(eq(u.user_id, user.id), eq(u.workspace_id, workspaceId)),
+      });
+      if (!userExists)
+        await db.insert(collaborators).values({ workspace_id:workspaceId, user_id: user.id });
     });
-    if (!userExists)
-      await db.insert(collaborators).values({ workspace_id:workspaceId, user_id: user.id });
-  });
 };
 
 export const getUsersFromSearch = async (email: string) => {
@@ -167,4 +167,27 @@ export const getUsersFromSearch = async (email: string) => {
     .from(users)
     .where(ilike(users.email, `${email}%`));
   return accounts;
+};
+
+export const createFolder = async (folder: Folder) => {
+  try {
+    const results = await db.insert(folders).values(folder);
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
+    return { data: null, error: 'Error' };
+  }
+};
+
+export const updateFolder = async (
+  folder: Partial<Folder>,
+  folderId: string
+) => {
+  try {
+    await db.update(folders).set(folder).where(eq(folders.id, folderId));
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
+    return { data: null, error: 'Error' };
+  }
 };

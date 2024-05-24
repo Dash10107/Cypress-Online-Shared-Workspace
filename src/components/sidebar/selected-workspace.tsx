@@ -11,12 +11,20 @@ const SelectedWorkspace = ({ workspace,
         const supabase = createClientComponentClient();
         const [workspaceLogo, setWorkspaceLogo] = useState('/cypresslogo.svg');
         useEffect(() => {
-          if (workspace.logo) {
-            const path = supabase.storage
-              .from('workspace-logos')
-              .getPublicUrl(workspace.logo)?.data.publicUrl;
-            setWorkspaceLogo(path);
-          }
+          const fetchWorkspaceLogo = async () => {
+            if (workspace.logo) {
+              const { data } =  supabase
+                .storage
+                .from('workspace-logos')
+                .getPublicUrl(workspace.logo);
+      
+              if (data) {
+                setWorkspaceLogo(data.publicUrl);
+              }
+            }
+          };
+      
+          fetchWorkspaceLogo();
         }, [workspace]);
 
 

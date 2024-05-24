@@ -1,6 +1,6 @@
 {
-  "id": "4dc21c46-ddff-4ec8-9920-36050f2c9d77",
-  "prevId": "4ca9f42f-ef8b-4e0e-b574-144695ab9454",
+  "id": "841755af-1397-4627-acfb-d7c9e89ef077",
+  "prevId": "32672d88-e088-4ec1-aae7-5748320d8c21",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -82,7 +82,8 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "title": {
           "name": "title",
@@ -104,12 +105,6 @@
         },
         "in_trash": {
           "name": "in_trash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "logo": {
-          "name": "logo",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -180,7 +175,8 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "title": {
           "name": "title",
@@ -202,12 +198,6 @@
         },
         "in_trash": {
           "name": "in_trash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "logo": {
-          "name": "logo",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -395,7 +385,8 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "workspace_owner": {
           "name": "workspace_owner",

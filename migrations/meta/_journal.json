@@ -5,29 +5,29 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1715524117674,
-      "tag": "0000_foamy_black_tarantula",
+      "when": 1716445465470,
+      "tag": "0000_icy_goblin_queen",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "6",
-      "when": 1715525083072,
-      "tag": "0001_broad_hercules",
+      "when": 1716447283460,
+      "tag": "0001_red_skreet",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "6",
-      "when": 1715527037229,
-      "tag": "0002_fixed_stature",
+      "when": 1716551261395,
+      "tag": "0002_first_shockwave",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "6",
-      "when": 1716355986488,
-      "tag": "0003_chilly_omega_flight",
+      "when": 1716552233039,
+      "tag": "0003_overrated_tigra",
       "breakpoints": true
     }
   ]

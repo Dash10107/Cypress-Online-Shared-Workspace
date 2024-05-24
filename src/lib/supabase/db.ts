@@ -17,6 +17,7 @@ const client = postgres(process.env.DATABASE_URL as string,{max:1});
     try {
         console.log('Migrating Client');
         await migrate(db,{migrationsFolder:"migrations"});  
+        console.log('Migrated Client Successfully');
     } catch (error) {
         console.log('Migrating DB Error',error);
         

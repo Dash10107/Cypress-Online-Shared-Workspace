@@ -118,11 +118,11 @@ const appReducer = (
           if (workspace.id === action.payload.workspaceId) {
             return {
               ...workspace,
-            //   folders: action.payload.folders.sort(
-            //     (a, b) =>
-            //       new Date(a.createdAt).getTime() -
-            //       new Date(b.createdAt).getTime()
-            //   ),
+              folders: action.payload.folders.sort(
+                (a, b) =>
+                  new Date(a.created_at).getTime() -
+                  new Date(b.created_at).getTime()
+              ),
             };
           }
           return workspace;
@@ -134,11 +134,11 @@ const appReducer = (
         workspaces: state.workspaces.map((workspace) => {
           return {
             ...workspace,
-            // folders: [...workspace.folders, action.payload.folder].sort(
-            //   (a, b) =>
-            //     new Date(a.createdAt).getTime() -
-            //     new Date(b.createdAt).getTime()
-            // ),
+            folders: [...workspace.folders, action.payload.folder].sort(
+              (a, b) =>
+                new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime()
+            ),
           };
         }),
       };
@@ -207,11 +207,11 @@ const appReducer = (
                 if (folder.id === action.payload.folderId) {
                   return {
                     ...folder,
-                    // files: [...folder.files, action.payload.file].sort(
-                    //   (a, b) =>
-                    //     new Date(a.createdAt).getTime() -
-                    //     new Date(b.createdAt).getTime()
-                    // ),
+                    files: [...folder.files, action.payload.file].sort(
+                      (a, b) =>
+                        new Date(a.created_at).getTime() -
+                        new Date(b.created_at).getTime()
+                    ),
                   };
                 }
                 return folder;

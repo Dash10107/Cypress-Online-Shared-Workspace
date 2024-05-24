@@ -24,6 +24,7 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { CreateWorkspaceFormSchema } from '@/lib/type';
 import { z } from 'zod';
+import { useAppState } from '@/lib/providers/state-provider';
 
 interface DashboardSetupProps {
   user: AuthUser;
@@ -36,7 +37,7 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
 }) => {
   const { toast } = useToast();
   const router = useRouter();
-//   const { dispatch } = useAppState();
+  const { dispatch } = useAppState();
   const [selectedEmoji, setSelectedEmoji] = useState('💼');
   const supabase = createClientComponentClient();
   const {
@@ -94,10 +95,10 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
       if (createError) {
         throw new Error();
       }
-    //   dispatch({
-    //     type: 'ADD_WORKSPACE',
-    //     payload: { ...newWorkspace, folders: [] },
-    //   });
+      dispatch({
+        type: 'ADD_WORKSPACE',
+        payload: { ...newWorkspace, folders: [] },
+      });
 
       toast({
         title: 'Workspace Created',

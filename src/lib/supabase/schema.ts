@@ -1,14 +1,16 @@
 
-import { boolean, integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { prices, products, subscription_status, users } from "../../../migrations/schema";
+import { bigint, boolean, integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+
 import { relations, sql } from "drizzle-orm";
+import { prices, subscription_status, users } from "../../../migrations/schema";
+
 
 export const workspaces = pgTable('workspaces',{
     id:uuid('id').defaultRandom().primaryKey().notNull(),
     created_at:timestamp('created_at',{
         withTimezone:true,
         mode:'string',
-    }),
+    }).defaultNow().notNull(),
     workspace_owner:uuid('workspace_owner').notNull(),
     title:text('title').notNull(),
     icon_id:text('icon_id').notNull(),
@@ -23,12 +25,11 @@ export const folders = pgTable('folders',{
     created_at:timestamp('created_at',{
         withTimezone:true,
         mode:'string',
-    }),
+    }).defaultNow().notNull(),
     title:text('title').notNull(),
     icon_id:text('icon_id').notNull(),
     data:text('data'),
     in_trash:text('in_trash'),
-    logo:text('logo'),
     banner_url:text('banner_url'),
     workspace_id:uuid('workspace_id').references(()=>workspaces.id,{
         onDelete:'cascade',
@@ -40,12 +41,11 @@ export const files = pgTable('files',{
     created_at:timestamp('created_at',{
         withTimezone:true,
         mode:'string',
-    }),
+    }).defaultNow().notNull(),
     title:text('title').notNull(),
     icon_id:text('icon_id').notNull(),
     data:text('data'),
     in_trash:text('in_trash'),
-    logo:text('logo'),
     banner_url:text('banner_url'),
     workspace_id:uuid('workspace_id').references(()=>workspaces.id,{
         onDelete:'cascade',
@@ -56,6 +56,9 @@ export const files = pgTable('files',{
 
 });
 
+
+
+  
 export const subscriptions = pgTable("subscriptions", {
 	id: text("id").primaryKey().notNull(),
 	user_id: uuid("user_id").notNull().references(() => users.id),
@@ -75,29 +78,17 @@ export const subscriptions = pgTable("subscriptions", {
 });
 
 export const collaborators = pgTable('collaborators', {
-    id: uuid('id').defaultRandom().primaryKey().notNull(),
-    workspace_id: uuid('workspace_id')
-      .notNull()
-      .references(() => workspaces.id, { onDelete: 'cascade' }),
-    created_at: timestamp('created_at', {
-      withTimezone: true,
-      mode: 'string',
-    })
-      .defaultNow()
-      .notNull(),
-    user_id: uuid('user_id')
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
-  });
-  
-  //Dont Delete!!!
-  export const productsRelations = relations(products, ({ many }) => ({
-    prices: many(prices),
-  }));
-  
-  export const pricesRelations = relations(prices, ({ one }) => ({
-    product: one(products, {
-      fields: [prices.product_id],
-      references: [products.id],
-    }),
-  }));
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
+  workspace_id: uuid('workspace_id')
+    .notNull()
+    .references(() => workspaces.id, { onDelete: 'cascade' }),
+  created_at: timestamp('created_at', {
+    withTimezone: true,
+    mode: 'string',
+  })
+    .defaultNow()
+    .notNull(),
+  user_id: uuid('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+});

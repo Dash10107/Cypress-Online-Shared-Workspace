@@ -71,15 +71,30 @@ const WorkspaceDropdown = ({ privateWorkspaces,
         rounded-md
         shadow-md
         z-50
-        h-[190px]
+        h-[220px]
         bg-black/10
         backdrop-blur-lg
         group
         overflow-scroll
         border-[1px]
         border-muted
+        no-scrollbar
+        
     "
       >
+          <style jsx>{`
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+      `}</style>
+        
         <div className="rounded-md flex flex-col">
           <div className="!p-2">
             {!!privateWorkspaces.length && (
