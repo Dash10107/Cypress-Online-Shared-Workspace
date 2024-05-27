@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { folders, files, workspaces, users, customers, products, prices, subscriptions, collaborators } from "./schema";
+import { folders, files, workspaces,  users, customers, products, prices, subscriptions, collaborators } from "./schema";
 
 export const filesRelations = relations(files, ({one}) => ({
 	folder: one(folders, {

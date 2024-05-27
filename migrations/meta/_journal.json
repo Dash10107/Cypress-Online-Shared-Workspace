@@ -29,6 +29,20 @@
       "when": 1716552233039,
       "tag": "0003_overrated_tigra",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1716715318754,
+      "tag": "0004_wealthy_joystick",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1716715605244,
+      "tag": "0005_wealthy_firebird",
+      "breakpoints": true
     }
   ]
 }

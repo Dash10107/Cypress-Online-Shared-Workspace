@@ -9,6 +9,7 @@ import { PlusIcon } from 'lucide-react';
 import { v4 } from 'uuid';
 import { createFolder } from '@/lib/supabase/queries';
 import { Accordion } from '../ui/accordion';
+import Dropdown from './Dropdown';
 
 interface FoldersDropdownListProps {
     workspaceFolders: Folder[];
@@ -134,14 +135,13 @@ interface FoldersDropdownListProps {
         {folders
           .filter((folder) => !folder.in_trash)
           .map((folder) => (
-            // <Dropdown
-            //   key={folder.id}
-            //   title={folder.title}
-            //   listType="folder"
-            //   id={folder.id}
-            //   iconId={folder.icon_id}
-            // />
-            <></>
+            <Dropdown
+              key={folder.id}
+              title={folder.title}
+              listType="folder"
+              id={folder.id}
+              iconId={folder.icon_id}
+            />
           ))}
       </Accordion>
     </>

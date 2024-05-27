@@ -5,10 +5,14 @@ import { useToast } from '../ui/use-toast';
 import { useSupabaseUser } from '@/lib/providers/supabase-user-provider';
 import { useAppState } from '@/lib/providers/state-provider';
 import { useRouter } from 'next/navigation';
-import { AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import clsx from 'clsx';
 import EmojiPicker from '../global/emoji-picker';
-import { updateFolder } from '@/lib/supabase/queries';
+import { createFile, updateFile, updateFolder } from '@/lib/supabase/queries';
+import TooltipComponent from '../global/tooltip-component';
+import { PlusIcon, Trash } from 'lucide-react';
+import { v4 } from 'uuid';
+import { File } from '@/lib/supabase/supabase.type';
 
 interface DropdownProps {
     title: string;
@@ -71,9 +75,12 @@ interface DropdownProps {
       }
         
       //double click handler
-  const handleDoubleClick = () => {
-    setIsEditing(true);
-  };
+      const handleDoubleClick = (e:any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsEditing(true);
+      };
+      
 
   const isFolder = listType === 'folder';
   const groupIdentifies = clsx(
@@ -131,6 +138,159 @@ interface DropdownProps {
     }
   };
 
+  const handleBlur = async () => {
+    if (!isEditing) return;
+    setIsEditing(false);
+    const fId = id.split('folder');
+    if (fId?.length === 1) {
+      if (!folderTitle) return;
+      toast({
+        title: 'Success',
+        description: 'Folder title changed.',
+      });
+      await updateFolder({ title }, fId[0]);
+    }
+
+    if (fId.length === 2 && fId[1]) {
+      if (!fileTitle) return;
+      const { data, error } = await updateFile( { title: fileTitle }, fId[1]);
+      if (error) {
+        toast({
+          title: 'Error',
+          variant: 'destructive',
+          description: 'Could not update the title for this file',
+        });
+      } else
+        toast({
+          title: 'Success',
+          description: 'File title changed.',
+        });
+    }
+  };
+
+  const folderTitleChange = (e: any) => {
+    if (!workspaceId) return;
+    const fid = id.split('folder');
+    if (fid.length === 1) {
+      dispatch({
+        type: 'UPDATE_FOLDER',
+        payload: {
+          folder: { title: e.target.value },
+          folderId: fid[0],
+          workspaceId,
+        },
+      });
+    }
+  };
+  const fileTitleChange = (e: any) => {
+    if (!workspaceId || !folderId) return;
+    const fid = id.split('folder');
+    if (fid.length === 2 && fid[1]) {
+      dispatch({
+        type: 'UPDATE_FILE',
+        payload: {
+          file: { title: e.target.value },
+          folderId,
+          workspaceId,
+          fileId: fid[1],
+        },
+      });
+    }
+  };
+
+  const addNewFile = async () => {
+    if (!workspaceId) return;
+    const newFile: File = {
+      folder_id: id,
+      data: null,
+      created_at: new Date().toISOString(),
+      in_trash: null,
+      title: 'Untitled 2',
+      icon_id: '📄',
+      id: v4(),
+      workspace_id:workspaceId,
+      banner_url: '',
+    };
+    dispatch({
+      type: 'ADD_FILE',
+      payload: { file: newFile, folderId: id, workspaceId },
+    });
+    const { data, error } = await createFile(newFile);
+    if (error) {
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: 'Could not create a file',
+      });
+    } else {
+      toast({
+        title: 'Success',
+        description: 'File created.',
+      });
+    }
+  };
+
+  //move to trash
+  const moveToTrash = async () => {
+    if (!user?.email || !workspaceId) return;
+    const pathId = id.split('folder');
+    if (listType === 'folder') {
+      dispatch({
+        type: 'UPDATE_FOLDER',
+        payload: {
+          folder: { in_trash: `Deleted by ${user?.email}` },
+          folderId: pathId[0],
+          workspaceId,
+        },
+      });
+      const { data, error } = await updateFolder(
+        { in_trash: `Deleted by ${user?.email}` },
+        pathId[0]
+      );
+      if (error) {
+        toast({
+          title: 'Error',
+          variant: 'destructive',
+          description: 'Could not move the folder to trash',
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: 'Moved folder to trash',
+        });
+      }
+    }
+
+    if (listType === 'file') {
+      dispatch({
+        type: 'UPDATE_FILE',
+        payload: {
+          file: { in_trash: `Deleted by ${user?.email}` },
+          folderId: pathId[0],
+          workspaceId,
+          fileId: pathId[1],
+        },
+      });
+      const { data, error } = await updateFile(
+        { in_trash: `Deleted by ${user?.email}` },
+        pathId[1]
+      );
+      if (error) {
+        toast({
+          title: 'Error',
+          variant: 'destructive',
+          description: 'Could not move the file to trash',
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: 'Moved file to trash',
+        });
+      }
+    }
+  };
+
+
   return (
     <AccordionItem
     value={id}
@@ -156,12 +316,73 @@ interface DropdownProps {
           justify-center 
           overflow-hidden"
           >
-            <div className='relative'>
-            <EmojiPicker getValue={onChangeEmojiHandler}>{iconId}</EmojiPicker>
+            <div className='relative flex  gap-4 
+          items-center 
+          justify-center 
+          overflow-hidden'>
+            <EmojiPicker getValue={onChangeEmoji}>{iconId}</EmojiPicker>
+            <input
+              type="text"
+              style={{
+                userSelect: 'none', // Prevent text selection
+                cursor: 'pointer', // Indicate clickable area
+              }}
+              value={listType === 'folder' ? folderTitle : fileTitle}
+              className={clsx(
+                'outline-none overflow-hidden w-[140px] text-Neutrals/neutrals-7',
+                {
+                  'bg-muted cursor-text': isEditing,
+                  'bg-transparent cursor-pointer': !isEditing,
+                }
+              )}
+              readOnly={!isEditing}
+              onDoubleClick={handleDoubleClick}
+              onBlur={handleBlur}
+              onChange={
+                listType === 'folder' ? folderTitleChange : fileTitleChange
+              }
+            />
             </div>
+            <div className={hoverStyles}>
+            <TooltipComponent message={listType==="folder"?"Delete Folder":"Delete File"}>
+              <Trash
+                onClick={moveToTrash}
+                size={15}
+                className="hover:dark:text-white dark:text-Neutrals/neutrals-7 transition-colors"
+              />
+            </TooltipComponent>
+            {listType === 'folder' && !isEditing && (
+              <TooltipComponent message="Add File">
+                <PlusIcon
+                  onClick={addNewFile}
+                  size={15}
+                  className="hover:dark:text-white dark:text-Neutrals/neutrals-7 transition-colors"
+                />
+              </TooltipComponent>
+            )}
+          </div>
           </div>
          </div>
       </AccordionTrigger>
+      <AccordionContent>
+        {state.workspaces
+          .find((workspace) => workspace.id === workspaceId)
+          ?.folders.find((folder) => folder.id === id)
+          ?.files.filter((file) => !file.in_trash)
+          .map((file) => {
+            const customFileId = `${id}folder${file.id}`;
+            console.log(state.workspaces)
+            return (
+              <Dropdown
+                key={file.id}
+                title={file.title}
+                listType="file"
+                id={customFileId}
+                iconId={file.icon_id}
+              />
+            );
+          })}
+      </AccordionContent>
   </AccordionItem>
   )
 }

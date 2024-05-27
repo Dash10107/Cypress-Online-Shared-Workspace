@@ -35,8 +35,8 @@ export const files = pgTable("files", {
 	data: text("data"),
 	in_trash: text("in_trash"),
 	banner_url: text("banner_url"),
-	workspace_id: uuid("workspace_id").references(() => workspaces.id, { onDelete: "cascade" } ),
-	folder_id: uuid("folder_id").references(() => folders.id, { onDelete: "cascade" } ),
+	workspace_id: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
+	folder_id: uuid("folder_id").notNull().references(() => folders.id, { onDelete: "cascade" } ),
 });
 
 export const folders = pgTable("folders", {
@@ -47,7 +47,7 @@ export const folders = pgTable("folders", {
 	data: text("data"),
 	in_trash: text("in_trash"),
 	banner_url: text("banner_url"),
-	workspace_id: uuid("workspace_id").references(() => workspaces.id, { onDelete: "cascade" } ),
+	workspace_id: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
 });
 
 export const users = pgTable("users", {
@@ -98,6 +98,7 @@ export const prices = pgTable("prices", {
 	metadata: jsonb("metadata"),
 });
 
+ 
 export const subscriptions = pgTable("subscriptions", {
 	id: text("id").primaryKey().notNull(),
 	user_id: uuid("user_id").notNull().references(() => users.id),

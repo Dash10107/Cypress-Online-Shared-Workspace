@@ -9,6 +9,7 @@ import PlanUsage from './plan-usage';
 import { ScrollArea } from '../ui/scroll-area';
 import NativeNavigation from './native-navigation';
 import FoldersDropdownList from './folders-dropdown-list';
+import UserCard from './user-card';
 const Sidebar =  async({params,className}:{params:{workspaceId:string};
     className?:string;}) => {
     const supabase = createServerComponentClient({cookies});
@@ -76,7 +77,7 @@ const Sidebar =  async({params,className}:{params:{workspaceId:string};
           />
         </ScrollArea>
     </div>
-
+    <UserCard subscription={subscriptionData} />
   </aside>
   )
 }

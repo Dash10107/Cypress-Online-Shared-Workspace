@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { File, Folder, workspace } from '../supabase/supabase.type';
 import { usePathname } from 'next/navigation';
-// import { getFiles } from '../supabase/queries';
+ import { getFiles } from '../supabase/queries';
 
 export type appFoldersType = Folder & { files: File[] | [] };
 export type appWorkspacesType = workspace & {
@@ -60,8 +60,8 @@ type Action =
       type: 'UPDATE_FOLDER';
       payload: {
         folder: Partial<appFoldersType>;
-        workspaceId: string;
-        folderId: string;
+        workspaceId: string ;
+        folderId: string ;
       };
     }
   | {
@@ -321,21 +321,21 @@ const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) => {
       }
   }, [pathname]);
 
-//   useEffect(() => {
-//     if (!folderId || !workspaceId) return;
-//     const fetchFiles = async () => {
-//       const { error: filesError, data } = await getFiles(folderId);
-//       if (filesError) {
-//         console.log(filesError);
-//       }
-//       if (!data) return;
-//       dispatch({
-//         type: 'SET_FILES',
-//         payload: { workspaceId, files: data, folderId },
-//       });
-//     };
-//     fetchFiles();
-//   }, [folderId, workspaceId]);
+  useEffect(() => {
+    if (!folderId || !workspaceId) return;
+    const fetchFiles = async () => {
+      const { error: filesError, data } = await getFiles(folderId);
+      if (filesError) {
+        console.log(filesError);
+      }
+      if (!data) return;
+      dispatch({
+        type: 'SET_FILES',
+        payload: { workspaceId, files: data, folderId },
+      });
+    };
+    fetchFiles();
+  }, [folderId, workspaceId]);
 
   useEffect(() => {
     console.log('App State Changed', state);
