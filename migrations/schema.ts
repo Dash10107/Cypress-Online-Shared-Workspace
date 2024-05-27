@@ -1,5 +1,5 @@
 import { pgTable, pgEnum, uuid, timestamp, text, foreignKey, jsonb, boolean, bigint, integer } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+  import { relations, sql } from "drizzle-orm"
 
 export const aal_level = pgEnum("aal_level", ['aal1', 'aal2', 'aal3'])
 export const code_challenge_method = pgEnum("code_challenge_method", ['s256', 'plain'])
@@ -98,7 +98,6 @@ export const prices = pgTable("prices", {
 	metadata: jsonb("metadata"),
 });
 
- 
 export const subscriptions = pgTable("subscriptions", {
 	id: text("id").primaryKey().notNull(),
 	user_id: uuid("user_id").notNull().references(() => users.id),
@@ -123,3 +122,18 @@ export const collaborators = pgTable("collaborators", {
 	created_at: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	user_id: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" } ),
 });
+
+
+export const pricesRelations = relations(prices, ({one, many}) => ({
+	product: one(products, {
+		fields: [prices.product_id],
+		references: [products.id]
+	}),
+	subscriptions_price_id: many(subscriptions, {
+		relationName: "subscriptions_price_id_prices_id"
+	}),
+}));
+
+export const productsRelations = relations(products, ({many}) => ({
+	prices: many(prices),
+}));

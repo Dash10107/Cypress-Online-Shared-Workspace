@@ -2,7 +2,7 @@
 import { bigint, boolean, integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { relations, sql } from "drizzle-orm";
-import { prices, subscription_status, users } from "../../../migrations/schema";
+import { prices, products, subscription_status, users } from "../../../migrations/schema";
 
 
 export const workspaces = pgTable('workspaces',{
@@ -92,3 +92,15 @@ export const collaborators = pgTable('collaborators', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
 });
+
+//Dont Delete!!!
+export const productsRelations = relations(products, ({ many }) => ({
+    prices: many(prices),
+  }));
+  
+  export const pricesRelations = relations(prices, ({ one }) => ({
+    product: one(products, {
+      fields: [prices.product_id],
+      references: [products.id],
+    }),
+  }));

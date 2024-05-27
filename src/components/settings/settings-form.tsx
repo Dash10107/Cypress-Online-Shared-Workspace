@@ -22,11 +22,13 @@ import CypressProfileIcon from '../icons/cypressProfileIcon';
 import LogoutButton from '../global/logout-button';
 import Link from 'next/link';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '../ui/alert-dialog';
+import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
+import { postData } from '@/lib/utils';
 
 const SettingsForm = () => {
     const { toast } = useToast();
     const { user, subscription } = useSupabaseUser();
-    // const { open, setOpen } = useSubscriptionModal();
+     const { open, setOpen } = useSubscriptionModal();
     const router = useRouter();
     const supabase = createClientComponentClient();
     const { state, workspaceId, dispatch } = useAppState();
@@ -40,10 +42,24 @@ const SettingsForm = () => {
     const [loadingPortal, setLoadingPortal] = useState(false);
 
 
+    const redirectToCustomerPortal = async () => {
+      setLoadingPortal(true);
+      try {
+        const { url, error } = await postData({
+          url: '/api/create-portal-link',
+        });
+        window.location.assign(url);
+      } catch (error) {
+        console.log(error);
+        setLoadingPortal(false);
+      }
+      setLoadingPortal(false);
+    };
+
     const addCollaborator = async (profile: User) => {
         if (!workspaceId) return;
         if (subscription?.status !== 'active' && collaborators.length >= 2) {
-        //   setOpen(true);
+           setOpen(true);
           return;
         }
         await addCollaborators([profile], workspaceId);
@@ -75,7 +91,7 @@ const SettingsForm = () => {
     });
     if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
     titleTimerRef.current = setTimeout(async () => {
-      // await updateWorkspace({ title: e.target.value }, workspaceId);
+       await updateWorkspace({ title: e.target.value }, workspaceId);
     }, 500);
   };
 
@@ -386,7 +402,35 @@ return
         >
           View Plans <ExternalLink size={16} />
         </Link>
+        {subscription?.status === 'active' ? (
+          <div>
+            <Button
+              type="button"
+              size="sm"
+              variant={'secondary'}
+              disabled={loadingPortal}
+              className="text-sm"
+              onClick={redirectToCustomerPortal}
+            >
+              Manage Subscription
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Button
+              type="button"
+              size="sm"
+              variant={'secondary'}
+              className="text-sm"
+              onClick={() => setOpen(true)}
+            >
+              Start Plan
+            </Button>
+          </div>
+        )}
+
         </>
+
         <AlertDialog open={openAlertMessage}>
         <AlertDialogContent>
           <AlertDialogHeader>

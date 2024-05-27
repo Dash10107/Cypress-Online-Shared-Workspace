@@ -10,6 +10,8 @@ import { v4 } from 'uuid';
 import { createFolder } from '@/lib/supabase/queries';
 import { Accordion } from '../ui/accordion';
 import Dropdown from './Dropdown';
+import useSupabaseRealtime from '@/lib/hooks/useSupabaseRealtime';
+import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
 
 interface FoldersDropdownListProps {
     workspaceFolders: Folder[];
@@ -20,9 +22,9 @@ interface FoldersDropdownListProps {
     workspaceFolders,
     workspaceId,
   }) => {
-
+    useSupabaseRealtime();
     const { state, dispatch, folderId } = useAppState();
-    // const { open, setOpen } = useSubscriptionModal();
+     const { open, setOpen } = useSubscriptionModal();
     const { toast } = useToast();
     const [folders, setFolders] = useState(workspaceFolders);
     const { subscription } = useSupabaseUser();
@@ -56,14 +58,14 @@ interface FoldersDropdownListProps {
     //add folder
     const addFolderHandler = async () => {
         if (folders.length >= 3 && !subscription) {
-        //   setOpen(true);
+           setOpen(true);
           return;
         }
         const newFolder: Folder = {
           data: null,
           id: v4(),
           created_at: new Date().toISOString(),
-          title: 'Untitled',
+          title: 'Untitled Folder',
           icon_id: '📄',
           in_trash: null,
           workspace_id:workspaceId,
