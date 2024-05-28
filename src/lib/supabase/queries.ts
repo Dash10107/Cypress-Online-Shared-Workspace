@@ -215,6 +215,19 @@ export const updateFile = async (file: Partial<File>, fileId: string) => {
   }
 };
 
+export const updateUser = async (user: Partial<User>, userId: string) => {
+  try {
+  const response = await db
+    .update(users)
+    .set(user)
+    .where(eq(users.id, userId));
+
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
+    return { data: null, error: 'Error' };
+  }
+};
 
 export const getFiles = async (folderId: string) => {
   const isValid = validate(folderId);
@@ -298,7 +311,7 @@ export const deleteFile = async (fileId: string) => {
 
 export const deleteFolder = async (folderId: string) => {
   if (!folderId) return;
-  await db.delete(files).where(eq(files.id, folderId));
+  await db.delete(folders).where(eq(folders.id, folderId));
 };
 
 export const getCollaborators = async (workspaceId: string) => {
@@ -366,3 +379,4 @@ export const getActiveProductsWithPrice = async () => {
     return { data: [], error };
   }
 };
+

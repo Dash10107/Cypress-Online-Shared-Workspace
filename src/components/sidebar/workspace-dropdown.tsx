@@ -82,18 +82,7 @@ const WorkspaceDropdown = ({ privateWorkspaces,
         
     "
       >
-          <style jsx>{`
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
 
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
-        }
-      `}</style>
         
         <div className="rounded-md flex flex-col">
           <div className="!p-2">

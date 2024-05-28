@@ -22,8 +22,7 @@ const Layout =  ({ children,params }: { children: React.ReactNode,params:any }) 
         border-l-[1px]
         w-full
         relative
-        overflow-scroll
-      "
+        overflow-scroll "
       >
            {children}
            </div>

@@ -11,6 +11,7 @@ import React, {
 import { File, Folder, workspace } from '../supabase/supabase.type';
 import { usePathname } from 'next/navigation';
  import { getFiles } from '../supabase/queries';
+import { AuthUser } from '@supabase/supabase-js';
 
 export type appFoldersType = Folder & { files: File[] | [] };
 export type appWorkspacesType = workspace & {
@@ -72,7 +73,7 @@ type Action =
         workspaceId: string;
         fileId: string;
       };
-    };
+    }
 
 const initialState: AppState = { workspaces: [] };
 
@@ -244,6 +245,7 @@ const appReducer = (
           return workspace;
         }),
       };
+    
     case 'UPDATE_FILE':
       return {
         ...state,

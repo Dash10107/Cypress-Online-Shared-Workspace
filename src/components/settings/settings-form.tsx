@@ -11,7 +11,7 @@ import { Separator } from '../ui/separator';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { v4 } from 'uuid';
-import { addCollaborators, deleteWorkspace, getCollaborators, removeCollaborators, updateWorkspace } from '@/lib/supabase/queries';
+import { addCollaborators, deleteWorkspace, findUser, getCollaborators, removeCollaborators, updateUser, updateWorkspace } from '@/lib/supabase/queries';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import CollaboratorSearch from '../global/collaborater-search';
 import { Button } from '../ui/button';
@@ -28,6 +28,7 @@ import { postData } from '@/lib/utils';
 const SettingsForm = () => {
     const { toast } = useToast();
     const { user, subscription } = useSupabaseUser();
+    const [profileAvatar,setUserProfileAvatar] = useState(String);
      const { open, setOpen } = useSubscriptionModal();
     const router = useRouter();
     const supabase = createClientComponentClient();
@@ -135,8 +136,25 @@ const SettingsForm = () => {
     } else setPermissions(val);
   };
 
-  const onChangeProfilePicture = async(e:any)=>{
-return
+  const onChangeProfilePicture = async( e: React.ChangeEvent<HTMLInputElement>)=>{
+   if (!user) return;
+   const file = e.target.files?.[0];
+   if (!file) return;
+   const uuid = v4();
+   setUploadingProfilePic(true);
+   const { data, error } = await supabase.storage
+     .from('avatar')
+     .upload(`avatar.${uuid}`, file, {
+       cacheControl: '3600',
+       upsert: true,
+     });
+     if (!error) {
+      toast({ title: 'Successfully Uploaded Profile Photo' });
+             //query to store avataar url in database 
+      await updateUser({avatar_url:data.path},user.id)
+     
+      setUploadingProfilePic(false)
+     }
   }
 
 
@@ -159,7 +177,21 @@ return
     fetchCollaborators();
   }, [workspaceId]);
 
+useEffect(()=>{
+  const fetchUserAvatar = async()=>{
+    if(!user) return;
+    const response = await findUser(user.id)
+  
+    if(response?.avatar_url == null) return;
+const avatarUrl = supabase.storage
+    .from('avatar')
+    .getPublicUrl(response.avatar_url).data.publicUrl;
+    setUserProfileAvatar(avatarUrl);
+  
+  }
 
+  fetchUserAvatar()
+},[])
   return (
     <div className="flex gap-4 flex-col">
       <p className="flex items-center gap-2 mt-6">
@@ -282,7 +314,7 @@ return
                     >
                       <div className="flex gap-4 items-center">
                         <Avatar>
-                          <AvatarImage src="/avatars/7.png" />
+                          <AvatarImage src={c.avatar_url ? c.avatar_url : "/avatars/7.png"} />
                           <AvatarFallback>PJ</AvatarFallback>
                         </Avatar>
                         <div
@@ -291,8 +323,8 @@ return
                           text-muted-foreground
                           overflow-hidden
                           overflow-ellipsis
-                          sm:w-[300px]
-                          w-[140px]
+                          sm:w-[280px]
+                          w-[120px]
                         "
                         >
                           {c.email}
@@ -357,7 +389,7 @@ return
         <Separator />
         <div className="flex items-center">
           <Avatar>
-            <AvatarImage src={''} />
+            <AvatarImage src={profileAvatar} />
             <AvatarFallback>
               <CypressProfileIcon />
             </AvatarFallback>

@@ -58,6 +58,7 @@ const Sidebar =  async({params,className}:{params:{workspaceId:string};
          <ScrollArea
           className="overflow-scroll relative
           h-[450px]
+          no-scrollbar
         "
         >
           <div
