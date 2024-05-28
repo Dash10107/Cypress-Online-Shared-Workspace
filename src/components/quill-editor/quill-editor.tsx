@@ -453,6 +453,7 @@ interface QuillEditorProps {
       .on('presence', { event: 'sync' }, () => {
         const newState = room.presenceState();
         const newCollaborators = Object.values(newState).flat() as any;
+        
         setCollaborators(newCollaborators);
         if (user) {
           const allCursors: any = [];
@@ -476,12 +477,11 @@ interface QuillEditorProps {
         if (status !== 'SUBSCRIBED' || !user) return;
         const response = await findUser(user.id);
         if (!response) return;
-
         room.track({
           id: user.id,
           email: user.email?.split('@')[0],
           avatarUrl: response.avatar_url
-            ? supabase.storage.from('avatars').getPublicUrl(response.avatar_url)
+            ? supabase.storage.from('avatar').getPublicUrl(response.avatar_url)
                 .data.publicUrl
             : '',
         });

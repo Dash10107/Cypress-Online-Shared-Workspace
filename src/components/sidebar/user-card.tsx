@@ -28,7 +28,7 @@ const UserCard: React.FC<UserCardProps> = async ({ subscription }) => {
   if (!response.avatar_url) avatarPath = '';
   else {
     avatarPath = supabase.storage
-      .from('avatars')
+      .from('avatar')
       .getPublicUrl(response.avatar_url)?.data.publicUrl;
   }
   const profile = {
