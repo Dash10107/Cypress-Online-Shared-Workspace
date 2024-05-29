@@ -205,7 +205,7 @@ interface DropdownProps {
       data: null,
       created_at: new Date().toISOString(),
       in_trash: null,
-      title: 'Untitled 2',
+      title: 'Untitled File',
       icon_id: '📄',
       id: v4(),
       workspace_id:workspaceId,

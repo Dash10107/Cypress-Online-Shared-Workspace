@@ -194,9 +194,10 @@ interface QuillEditorProps {
             }
             if (dirType === 'folder') {
               if (!workspaceId) return;
+              if(!folderId) return;
               dispatch({
                 type: 'DELETE_FOLDER',
-                payload: { folderId: fileId, workspaceId },
+                payload: { folderId: folderId, workspaceId },
               });
               await deleteFolder(fileId);
               router.replace(`/dashboard/${workspaceId}`);
