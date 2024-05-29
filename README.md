@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+🚀 Introducing Cypress - Online Editor 🚀
+I'm excited to share my latest project: Cypress, an innovative online editor designed to enhance your productivity and collaboration experience.
+In a world dominated by the MERN stack, it's crucial to explore and master diverse technologies. Cypress is built with Next.js, Supabase PostgreSQL, Redis, and ShadCN-UI, setting it apart from typical MERN applications.
 
-First, run the development server:
+Check it out yourself at https:https://cypress-izbl.onrender.com/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+to see these features in action.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When you first dive into Cypress, you're greeted with a sleek dashboard that's easy to navigate. Signing up or logging in is a breeze, so you can get started right away. Once you're in, you can create workspaces tailored to your needs. Whether you want to keep things private or share them with your team, Cypress has got you covered.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Inside these workspaces, you can do everything you need with your files and folders: create, save, edit, delete, restore, and rename them. It's all about giving you full control. And if you're working with a team, the magic happens in shared workspaces. You can add collaborators and see changes happening in real time, thanks to socket integration. It's like you're all working together in the same room, even if you're miles apart.
 
-## Learn More
+Cypress also lets you switch between dark and light modes, so you can work comfortably no matter the time of day. Plus, we have two plans to fit different needs: a free plan that lets you create up to three folders and a paid plan for unlimited access. Payments are handled securely through Stripe, making the upgrade process smooth and easy.
 
-To learn more about Next.js, take a look at the following resources:
+Cypress is more than just an editor; it's a tool designed to make your workflow smoother and your collaboration seamless. I can't wait for you all to try it out. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Make sure to check it out. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Website Tour:  https://github.com/Dash10107/Notion-Clone-in-Next/assets/97282628/7a4db6e2-ed5c-4bc7-8b9f-fec35cb19026
