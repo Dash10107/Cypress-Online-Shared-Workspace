@@ -12,7 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import React, { useMemo, useState } from 'react'
+import React, { Suspense, useMemo, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod'
 import Logo from '../../../../public/cypresslogo.svg';
@@ -74,6 +74,7 @@ const SignUp = () => {
       };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <FormProvider {...form}>
     <form
       onChange={() => {
@@ -200,6 +201,7 @@ const SignUp = () => {
       )}
     </form>
   </FormProvider>
+  </Suspense>
   )
 }
 
