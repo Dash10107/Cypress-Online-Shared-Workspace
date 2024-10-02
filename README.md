@@ -1,21 +1,54 @@
+# Cypress - Online Editor
 
-🚀 Introducing Cypress - Online Editor 🚀
-I'm excited to share my latest project: Cypress, an innovative online editor designed to enhance your productivity and collaboration experience.
-In a world dominated by the MERN stack, it's crucial to explore and master diverse technologies. Cypress is built with Next.js, Supabase PostgreSQL, Redis, and ShadCN-UI, setting it apart from typical MERN applications.
+🚀 **Introducing Cypress - Your Innovative Online Editor** 🚀
 
-Check it out yourself at https:https://cypress-izbl.onrender.com/
+I'm excited to share my latest project: **Cypress**, an innovative online editor designed to enhance your productivity and collaboration experience. In a world dominated by the MERN stack, it's crucial to explore and master diverse technologies. Cypress is built with **Next.js**, **Supabase PostgreSQL**, **Redis**, and **ShadCN-UI**, setting it apart from typical MERN applications.
 
-to see these features in action.
+## Live Demo
 
+Check out the live demo and experience these features in action: [Cypress Online Editor](https://cypress-online-shared-workspace.vercel.app/)
 
-When you first dive into Cypress, you're greeted with a sleek dashboard that's easy to navigate. Signing up or logging in is a breeze, so you can get started right away. Once you're in, you can create workspaces tailored to your needs. Whether you want to keep things private or share them with your team, Cypress has got you covered.
+## Features
 
-Inside these workspaces, you can do everything you need with your files and folders: create, save, edit, delete, restore, and rename them. It's all about giving you full control. And if you're working with a team, the magic happens in shared workspaces. You can add collaborators and see changes happening in real time, thanks to socket integration. It's like you're all working together in the same room, even if you're miles apart.
+- **Sleek Dashboard**: Upon entering Cypress, you're greeted with an intuitive dashboard that makes navigation effortless.
+- **User-Friendly Authentication**: Signing up or logging in is a breeze, allowing you to get started right away.
+- **Custom Workspaces**: Create workspaces tailored to your needs. Whether you want to keep things private or share them with your team, Cypress has you covered.
+- **File Management**: Inside your workspaces, you can:
+  - Create
+  - Save
+  - Edit
+  - Delete
+  - Restore
+  - Rename files and folders
+- **Real-Time Collaboration**: In shared workspaces, add collaborators and see changes happen in real-time, thanks to socket integration. It's like working together in the same room, even if you're miles apart.
+- **Dark & Light Modes**: Switch between dark and light modes for a comfortable working environment at any time of day.
+- **Flexible Plans**: Choose from two plans to fit different needs:
+  - **Free Plan**: Create up to three folders.
+  - **Paid Plan**: Enjoy unlimited access.
+- **Secure Payments**: Upgrading your plan is seamless with secure payments handled through Stripe.
 
-Cypress also lets you switch between dark and light modes, so you can work comfortably no matter the time of day. Plus, we have two plans to fit different needs: a free plan that lets you create up to three folders and a paid plan for unlimited access. Payments are handled securely through Stripe, making the upgrade process smooth and easy.
+## Why Cypress?
 
-Cypress is more than just an editor; it's a tool designed to make your workflow smoother and your collaboration seamless. I can't wait for you all to try it out. 
+Cypress is more than just an editor; it's a tool designed to make your workflow smoother and your collaboration seamless. I can't wait for you all to try it out!
 
-Make sure to check it out. 
+## Website Tour
 
-Website Tour:  https://github.com/Dash10107/Notion-Clone-in-Next/assets/97282628/7a4db6e2-ed5c-4bc7-8b9f-fec35cb19026
+Take a quick tour of the application: [Website Tour](https://github.com/Dash10107/Notion-Clone-in-Next/assets/97282628/7a4db6e2-ed5c-4bc7-8b9f-fec35cb19026)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version >= 14.x)
+- A browser to access the online editor
+
+### Installation
+
+If you want to run the project locally:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Dash10107/Cypress.git
+   cd Cypress
+   npm install
+   npm run dev
