@@ -227,6 +227,7 @@ const Header = () => {
         justify-end
       "
       >
+
         <Link href={'/login'}>
           <Button
             variant="btn-secondary"
@@ -237,12 +238,17 @@ const Header = () => {
         </Link>
         <Link href="/signup">
           <Button
-            variant="btn-primary"
-            className="whitespace-nowrap"
+            variant="btn-secondary"
+            className="p-1 hidden sm:block"
           >
             Sign Up
           </Button>
         </Link>
+        <Link href="https://yoom-meet-lilac.vercel.app/">
+    <Button variant="btn-primary" className="mx-8 whitespace-nowrap">
+      Go to  Meetings
+    </Button>
+    </Link>
       </aside>
     </header>
   );

@@ -7,7 +7,8 @@ import { randomUUID } from 'crypto';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from '@/lib/constants';
-import Cal from '../../../public/cal.png';
+// import Cal from '../../../public/cal.png';
+import Cal from '../../../public/image.png';
 import Diamond from '../../../public/icons/diamond.svg';
 import CheckIcon from '../../../public/icons/check.svg';
 import CustomCard from '@/components/landing-page/custom-card';
@@ -80,7 +81,7 @@ const Home = () => {
             absolute
             z-10
           "
-          ></div>
+          />
         </div>
         </section>
      <section className="relative">
@@ -171,7 +172,7 @@ const Home = () => {
         />
         <div
           className="mt-10
-          max-w-[450px]
+          max-w-[1050px]
           flex
           justify-center
           items-center
@@ -182,6 +183,7 @@ const Home = () => {
           border-washed-purple-300 
           border-opacity-10
         "
+          
         >
           <Image
             src={Cal}
@@ -266,7 +268,7 @@ const Home = () => {
                       {testimonial.message}
                     </p>
                   }
-                ></CustomCard>
+                />
               ))}
             </div>
           ))}
